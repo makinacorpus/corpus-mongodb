@@ -56,24 +56,6 @@
                   --groups {{cfg.group}}:r-x \
                   --groups {{salt['mc_apache.settings']().httpd_user}}:r-x;
              done
-             find "{{cfg.data_root}}/var" "{{cfg.project_root}}" -maxdepth 1 -mindepth 1|\
-              egrep "/(bin|lib|www|sites|run|private|tmp|log)"|while read f;do
-                {{locs.resetperms}} -q\
-                  --fmode 771 --dmode 771 \
-                  -u {{cfg.user}} -g {{cfg.group}}\
-                  --paths "$f"\
-                  --users {{cfg.user}}:rwx \
-                  --groups {{cfg.group}}:r-x \
-                  --groups {{salt['mc_apache.settings']().httpd_user}}:r-x;
-             done
-             find "{{cfg.data_root}}/var/run" -type s|while read f;do
-                  chmod 771 "${f}"
-                  chown {{cfg.user}}:{{cfg.group}} "${f}"
-                  setfacl -bR "${f}"
-                  setfacl -m u:{{cfg.user}}:rwx "${f}"
-                  setfacl -m g:{{cfg.group}}:rwx "${f}"
-                  setfacl -m u:{{salt['mc_apache.settings']().httpd_user}}:rwx "${f}"
-             done
              {{locs.resetperms}} -q --no-recursive\
                --fmode 771 --dmode 771 \
                -u {{cfg.user}} -g {{cfg.group}}\
