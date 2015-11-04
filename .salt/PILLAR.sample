@@ -27,5 +27,9 @@ makina-projects.projectname:
           user: db1
     http_users:
       - root: secret
-
+    keep_days: '17'
+    keep_lasts: '21'
+    keep_monthes: '1'
+    keep_weeks: '2'
+    keep_logs: '7'
 # vim:set ft=yaml:
